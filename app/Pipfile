@@ -9,6 +9,7 @@ uuid = "*"
 typing = "*"
 pydantic = "*"
 uvicorn = {extras = ["standard"], version = "*"}
+pymongo = "*"
 
 [dev-packages]
 
