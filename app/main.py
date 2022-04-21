@@ -1,7 +1,9 @@
-from fastapi import FastAPI, HTTPException
+"""Imported libraries and modules"""
 from typing import List
-from models import User, Gender, Role
 from uuid import UUID
+from fastapi import FastAPI, HTTPException
+from models import User, Gender, Role
+
 
 app = FastAPI()
 
@@ -25,18 +27,21 @@ db: List[User] = [
 
 @app.get("/api/v1/users")
 async def fetch_users():
+    """localhost:8000/api/v1/users  >  fetch users from db"""
     return db
 
 
 @app.post("/api/v1/users")
 async def registger_user(user: User):
+    """localhost:8000/api/v1/users   >  adding users with POST"""
     db.append(user)
     return {"user_id": user.id}
 
 
 @app.delete("/api/v1/users/{user_id}")
 async def delete_user(user_id: UUID):
-    for user in db:
+    """localhost:8000/api/v1/users/{user_id}  >  delete users by user_id"""
+    for user in db.copy():
         if user.id == user_id:
             db.remove(user)
             return
