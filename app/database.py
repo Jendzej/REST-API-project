@@ -1,5 +1,5 @@
 import pymongo
-from models import User
+from models import User, Gender, Role
 from uuid import UUID
 
 myclient = pymongo.MongoClient("mongodb+srv://admin:admin@databaseapi.yfjsz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
@@ -21,7 +21,7 @@ def join_user_data(user: User, collection_data=users_data):
         collection_data.insert_many(data_to_join)
     except:
         collection_data.insert_one(data_to_join)
-    return data_to_join["py_id"]
+    return get_users()
 
 
 def get_users(collection=users_data):
@@ -36,21 +36,18 @@ def delete_users(user_id: UUID):
     for data in users_data.find({}, {"_id":0}):
         if data["py_id"] == str(user_id):
             users_data.delete_one({"py_id": str(user_id)})
+    return get_users()
 
 
 def update_users(user: User):
     for data in users_data.find():
-        print(data["py_id"])
+        ip_str = str(user.id)
         if data["py_id"] == str(user.id):
-            if data["first_name"] == user.first_name:
-                print("Te same imiona")
-            else:
-                print("zmiana imienia")
-                users_data.update_many({"py_id":"1f5dcdf0-7b97-4292-812e-0b82164c435a"},{"$set": {
-                    "py_id": user.id,
-                    "first_name": user.first_name,
-                    "last_name": user.last_name,
-                    "middle_name": user.middle_name,
-                    "gender": user.gender,
-                    "roles": user.roles
-                }})
+            users_data.update_many({"py_id":ip_str},{"$set": {
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "middle_name": user.middle_name,
+                "gender": user.gender,
+                "roles": user.roles
+            }})
+    return get_users()
