@@ -20,5 +20,13 @@ uvicorn main:app --reload
 http://localhost:8000/api/v1/get
 
 <h3>CONFIGURE APP</h3>
-- **main.py** - In this file you can configure functions, which are used by HTML methods, change endpoints urls and change file with database.
-
+<h5>main.py</h5>
+In this file you can configure functions, which are used by HTML methods, change endpoints urls and change file with database.\
+*example:*
+```python
+[...]
+@app.get("/url_path/")
+async def function():
+    """example of GET endpoint with url 'localhost:8000/url_path/' which returns data_to_return """
+    return data_to_return
+```
