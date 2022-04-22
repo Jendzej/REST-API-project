@@ -1,5 +1,16 @@
 import pymongo
 
+def join_data(tags: list, data: list, collection):
+    data_to_join = []
+    loop_num = 0
+    for tag in tags:
+        data_to_join.append({f"{tag}":f"{data[loop_num]}"})
+        loop_num+=1
+    try:
+        collection.insert_one(data_to_join)
+    except:
+        collection.insert_many(data_to_join)
+
 myclient = pymongo.MongoClient("mongodb+srv://admin:admin@databaseapi.yfjsz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 
 mydb = myclient["mydatabase"]
