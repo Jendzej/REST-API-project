@@ -15,7 +15,7 @@ Used methods:
         pipenv install
 - Run this command in app directory to run server:
 ```bash
-uvicorn main:app --reload
+    uvicorn main:app --reload
 ```
 - If server is running, you can test app by typing following url to your browser:\
 http://localhost:8000/api/v1/get
