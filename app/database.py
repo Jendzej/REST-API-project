@@ -1,39 +1,68 @@
 import pymongo
-
-def join_data(tags: list, data: list, collection):
-    data_to_join = []
-    loop_num = 0
-    for tag in tags:
-        data_to_join.append({f"{tag}":f"{data[loop_num]}"})
-        loop_num+=1
-    try:
-        collection.insert_one(data_to_join)
-    except:
-        collection.insert_many(data_to_join)
+from models import User, Role, Gender
+from uuid import UUID
 
 myclient = pymongo.MongoClient("mongodb+srv://admin:admin@databaseapi.yfjsz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 
-mydb = myclient["mydatabase"]
+mydb = myclient["api_database"]
 
-collection1 = mydb["users"]
+users_data = mydb["Users data"]
 
-mylist = [
-  { "_id": 1, "name": "John", "address": "Highway 37"},
-  { "_id": 2, "name": "Peter", "address": "Lowstreet 27"},
-  { "_id": 3, "name": "Amy", "address": "Apple st 652"},
-  { "_id": 4, "name": "Hannah", "address": "Mountain 21"},
-  { "_id": 5, "name": "Michael", "address": "Valley 345"},
-  { "_id": 6, "name": "Sandy", "address": "Ocean blvd 2"},
-  { "_id": 7, "name": "Betty", "address": "Green Grass 1"},
-  { "_id": 8, "name": "Richard", "address": "Sky st 331"},
-  { "_id": 9, "name": "Susan", "address": "One way 98"},
-  { "_id": 10, "name": "Vicky", "address": "Yellow Garden 2"},
-  { "_id": 11, "name": "Ben", "address": "Park Lane 38"},
-  { "_id": 12, "name": "William", "address": "Central st 954"},
-  { "_id": 13, "name": "Chuck", "address": "Main Road 989"},
-  { "_id": 14, "name": "Viola", "address": "Sideway 1633"}
-]
 
-put_data = collection1.insert_many(mylist)
+def join_user_data(user: User, collection_data=users_data):
+    data_to_join = {}
+    data_to_join["first_name"] = user.first_name
+    data_to_join["last_name"] = user.last_name
+    data_to_join["middle_name"] = user.middle_name
+    data_to_join["gender"] = user.gender
+    data_to_join["roles"] = user.roles
+    data_to_join["py_id"] = str(user.id)
+    try:
+        collection_data.insert_many(data_to_join)
+    except:
+        collection_data.insert_one(data_to_join)
+    return data_to_join["py_id"]
 
-print(put_data.inserted_ids)
+
+def get_users(collection=users_data):
+    
+    data_to_return = []
+    for data in collection.find({}, {"_id":0}):
+        data_to_return.append(data)
+    return data_to_return
+
+
+def delete_users(user_id: UUID):
+    for data in users_data.find({}, {"_id":0}):
+        if data["py_id"] == str(user_id):
+            users_data.delete_one({"py_id": str(user_id)})
+
+
+def update_users(user: User):
+    for data in users_data.find({'py_id':f'{user.id}'}):
+        data["first_name"] = user.first_name
+        data["last_name"] = user.last_name
+        data["middle_name"] = user.middle_name
+        data["gender"] = user.gender
+        data["roles"] = user.roles
+
+
+user = User(
+            id="1f5dcdf0-7b97-4292-812e-0b82164c351d",
+            first_name="Jan",
+            last_name="Kowalski",
+            gender=Gender.male,
+            roles=[Role.admin]
+    )
+
+zbigniew = User(
+            id="1f5dcdf0-7b97-4292-812e-0b82164c435a",
+            first_name="Jan",
+            last_name="Kowalski",
+            gender=Gender.male,
+            roles=[Role.student]
+)
+#print(join_user_data(user=zbigniew, collection_data=users_data))
+#delete_users(UUID('1f5dcdf0-7b97-4292-812e-0b82164c353c'))
+#print(update_users(zbigniew))
+#print(get_users(users_data))
