@@ -20,6 +20,5 @@ uvicorn main:app --reload
 http://localhost:8000/api/v1/get
 
 <h3>CONFIGURE APP</h3>
-**main.py**
-- In this file you can configure functions, which are used by HTML methods, change endpoints urls and change file with database.
+- **main.py** - In this file you can configure functions, which are used by HTML methods, change endpoints urls and change file with database.
 
