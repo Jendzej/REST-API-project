@@ -12,11 +12,11 @@ Used methods:
 
 <h3>STARTING APP</h3>
 - First you should install all python packages. To do this, run this command:
-```bash
+```
 pipenv install
 ```
 - Run this command in app directory to run server:
-```bash
+```
 uvicorn main:app --reload
 ```
 - If server is running, you can test app by typing following url to your browser:\
