@@ -39,13 +39,21 @@ def delete_users(user_id: UUID):
 
 
 def update_users(user: User):
-    for data in users_data.find({'py_id':f'{user.id}'}):
-        data["first_name"] = user.first_name
-        data["last_name"] = user.last_name
-        data["middle_name"] = user.middle_name
-        data["gender"] = user.gender
-        data["roles"] = user.roles
-
+    for data in users_data.find():
+        print(data["py_id"])
+        if data["py_id"] == str(user.id):
+            if data["first_name"] == user.first_name:
+                print("Te same imiona")
+            else:
+                print("zmiana imienia")
+                users_data.update_many({"py_id":"1f5dcdf0-7b97-4292-812e-0b82164c435a"},{"$set": {
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "middle_name": user.middle_name,
+                    "gender": user.gender,
+                    "roles": user.roles
+                }})
+            
 
 user = User(
             id="1f5dcdf0-7b97-4292-812e-0b82164c351d",
@@ -56,8 +64,8 @@ user = User(
     )
 
 zbigniew = User(
-            id="1f5dcdf0-7b97-4292-812e-0b82164c435a",
-            first_name="Jan",
+            id=UUID("1f5dcdf0-7b97-4292-812e-0b82164c435a"),
+            first_name="Heliusz",
             last_name="Kowalski",
             gender=Gender.male,
             roles=[Role.student]
@@ -66,5 +74,5 @@ zbigniew = User(
 #delete_users(UUID('1f5dcdf0-7b97-4292-812e-0b82164c353c'))
 #print(update_users(zbigniew))
 
-
+update_users(zbigniew)
 #print(get_users(users_data))
