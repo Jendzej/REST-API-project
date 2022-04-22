@@ -1,8 +1,7 @@
 """Imported libraries and modules"""
 from uuid import UUID
-#from typing import List
 from fastapi import FastAPI
-from models import User #, Gender, Role
+from models import User
 import database
 
 
