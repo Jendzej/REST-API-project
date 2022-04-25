@@ -11,8 +11,14 @@ Used methods:
 
 
 <h3>STARTING APP</h3>
-- First you should install all python packages. To do this, run this command:
-        pipenv install
+- First, you should install python package to manage python packages:
+```bash
+    pip install pipenv
+```
+- Then install packages with pipenv in app directory:
+```bash
+    pipenv install
+```
 - Run this command in app directory to run server:
 ```bash
     uvicorn main:app --reload
