@@ -26,7 +26,7 @@ Used methods:
 - If server is running, you can test app by typing following url to your browser:\
 http://localhost:8000/api/v1/get
 
-    - *Only GET method can be achieved in browser. To operate with other methods you should use any RECT client (for example [postman.co](https://postman.co)).*
+- *Only GET method can be achieved in browser. To operate with other methods you should use any RECT client (for example [postman.co](https://postman.co)).*
 <h3>CONFIGURE APP</h3>
 <h5>main.py</h5>
 In this file you can configure functions, which are used by HTML methods, change endpoints urls and change file with database.\
