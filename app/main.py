@@ -3,6 +3,7 @@ from uuid import UUID
 from fastapi import FastAPI
 from models import User
 import database
+import uvicorn
 
 
 app = FastAPI()
@@ -30,3 +31,11 @@ async def delete_user(user_id: UUID):
 async def update_user(user_update: User):
     """localhost:8000/api/v1/put  >  update user data"""
     return database.update_users(user_update)
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "main:app",
+        host='127.0.0.1',
+        reload=True,
+        port=8000
+    )
