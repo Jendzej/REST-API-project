@@ -9,13 +9,18 @@ import uvicorn
 app = FastAPI()
 
 
-@app.get("/api/v1/users")
-async def fetch_users():
+@app.get("/api/v1/users/")
+async def fetch_all_users():
     """localhost:8000/api/v1/get  >  fetch users from db"""
     return database.get_users()
 
 
-@app.post("/api/v1/users")
+# @app.get("/api/v1/users/{user_id}")
+# async def fetch_one_user(user_id: UUID, user: User):
+#     return {"user_id": user_id}
+
+
+@app.post("/api/v1/users/")
 async def registger_user(user: User):
     """localhost:8000/api/v1/post   >  adding users with POST"""
     return database.join_user_data(user)
@@ -31,6 +36,7 @@ async def delete_user(user_id: UUID):
 async def update_user(user_update: User):
     """localhost:8000/api/v1/put  >  update user data"""
     return database.update_users(user_update)
+
 
 if __name__ == "__main__":
     uvicorn.run(
