@@ -1,4 +1,5 @@
 """Importing modules"""
+from typing import Collection
 from uuid import UUID, uuid4
 import pymongo
 from models import User
@@ -21,7 +22,7 @@ def join_user_data(user: User, collection_data=users_data):
         "gender": user.gender,
         "roles": user.roles
     }
-    for data in users_data.find({}, {"py_id":1}):
+    for data in collection_data.find({}, {"py_id":1}):
         if str(user.id) in data:
             data["py_id"] = uuid4()
         else:
@@ -39,6 +40,10 @@ def get_users(collection=users_data):
     for data in collection.find({}, {"_id":0}):
         data_to_return.append(data)
     return data_to_return
+
+
+def get_one_user(user_id: UUID, collection=users_data):
+    return user_id
 
 
 def delete_users(user_id: UUID):
