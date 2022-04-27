@@ -2,25 +2,25 @@
 from uuid import UUID, uuid4
 import pymongo
 from models import User
+import payloads.constances
 
 
-myclient = pymongo.MongoClient(
-"mongodb+srv://admin:admin@databaseapi.yfjsz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-)
+myclient = pymongo.MongoClient(payloads.constances.DATABASELINK)
 
-mydb = myclient["api_database"]
+mydb = myclient[payloads.constances.DATABASENAME]
 
-users_data = mydb["Users data"]
+users_data = mydb[payloads.constances.COLLECTIONNAME]
 
 
 def join_user_data(user: User, collection_data=users_data):
     """POST method function"""
-    data_to_join = {}
-    data_to_join["first_name"] = user.first_name
-    data_to_join["last_name"] = user.last_name
-    data_to_join["middle_name"] = user.middle_name
-    data_to_join["gender"] = user.gender
-    data_to_join["roles"] = user.roles
+    data_to_join = {
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "middle_name": user.middle_name,
+        "gender": user.gender,
+        "roles": user.roles
+    }
     for data in users_data.find({}, {"py_id":1}):
         if str(user.id) in data:
             data["py_id"] = uuid4()
@@ -30,7 +30,7 @@ def join_user_data(user: User, collection_data=users_data):
         collection_data.insert_many(data_to_join)
     except:
         collection_data.insert_one(data_to_join)
-    return get_users()
+    return user
 
 
 def get_users(collection=users_data):
