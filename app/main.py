@@ -17,6 +17,7 @@ async def fetch_all_users():
 
 @app.get("/api/v1/users/1/{user_id}")
 async def fetch_one_user(user_id: UUID):
+    """getting one user by id"""
     return database.get_one_user(user_id)
 
 
@@ -33,9 +34,9 @@ async def delete_user(user_id: UUID):
 
 
 @app.put("/api/v1/users/1/{user_id}")
-async def update_user(user_id: UUID): # user_update: User
+async def update_user(user_id: UUID, user: User): # user_update: User
     """localhost:8000/api/v1/put  >  update user data"""
-    return database.update_users(user_id)
+    return database.update_users(user_id, user)
 
 
 if __name__ == "__main__":

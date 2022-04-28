@@ -36,14 +36,11 @@ def join_user_data(user: User, collection_data=users_data):
 
 def get_users(collection=users_data):
     """GET method function"""
-    data_to_return = []
-    for data in collection.find({}, {"_id":0}):
-        data_to_return.append(data)
-    return data_to_return
+    return [x for x in collection.find({}, {"_id":0})]
 
 
 def get_one_user(user_id: UUID, collection=users_data):
-    return user_id
+    return collection.find_one({'py_id':str(user_id)}, {"_id":0})
 
 
 def delete_users(user_id: UUID):
@@ -54,17 +51,13 @@ def delete_users(user_id: UUID):
     return get_users()
 
 
-def update_users(user_id: UUID):
+def update_users(user_id: UUID, user: User):
     """PUT method function"""
-    # for data in users_data.find():
-    #     ip_str = str(user.id)
-    #     if data["py_id"] == str(user.id):
-    #         users_data.update_many({"py_id":ip_str},{"$set": {
-    #             "first_name": user.first_name,
-    #             "last_name": user.last_name,
-    #             "middle_name": user.middle_name,
-    #             "gender": user.gender,
-    #             "roles": user.roles
-    #         }})
-    users_data.find({"py_id": str(user_id)})
-    return get_users()
+    users_data.find_one_and_update({"py_id": str(user_id)}, {"$set": {
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "middle_name": user.middle_name,
+        "gender": user.gender,
+        "roles": user.roles
+    }})
+    return users_data.find_one({'py_id':str(user_id)}, {"_id":0})
