@@ -11,31 +11,31 @@ app = FastAPI()
 
 @app.get("/api/v1/users/")
 async def fetch_all_users():
-    """localhost:8000/api/v1/get  >  fetch users from db"""
+    """GET method, which fetch all users from database"""
     return database.get_users()
 
 
 @app.get("/api/v1/users/1/{user_id}")
 async def fetch_one_user(user_id: UUID):
-    """getting one user by id"""
+    """GET method, which fetch one user from database (by user_id)"""
     return database.get_one_user(user_id)
 
 
 @app.post("/api/v1/users/")
 async def insert_user_data(user: User):
-    """localhost:8000/api/v1/post   >  adding users with POST"""
+    """POST method to inserting data to database"""
     return database.join_user_data(user)
 
 
 @app.delete("/api/v1/users/1/{user_id}")
 async def delete_user(user_id: UUID):
-    """localhost:8000/api/v1/delete/{user_id}  >  delete users by user_id"""
+    """DELETE method to deleting user data from database (by user_id)"""
     return database.delete_users(user_id)
 
 
 @app.put("/api/v1/users/1/{user_id}")
 async def update_user(user_id: UUID, user: User): # user_update: User
-    """localhost:8000/api/v1/put  >  update user data"""
+    """PUT method to update user data from database (by user_id)"""
     return database.update_users(user_id, user)
 
 
