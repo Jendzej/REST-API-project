@@ -10,9 +10,9 @@ typing = "*"
 pydantic = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 pymongo = "*"
-pylint = "*"
 
 [dev-packages]
+pylint = "*"
 
 [requires]
 python_version = "3.10"

@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from uuid import UUID, uuid4
 from typing import Optional, List
 from enum import Enum
@@ -16,7 +16,7 @@ class Role(str, Enum):
 
 
 class User(BaseModel):
-    id: Optional[UUID] = uuid4()
+    id: Optional[UUID] = Field(default_factory=uuid4)
     first_name: str
     last_name: str
     middle_name: Optional[str]
