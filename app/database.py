@@ -54,16 +54,17 @@ def delete_users(user_id: UUID):
     return get_users()
 
 
-def update_users(user: User):
+def update_users(user_id: UUID):
     """PUT method function"""
-    for data in users_data.find():
-        ip_str = str(user.id)
-        if data["py_id"] == str(user.id):
-            users_data.update_many({"py_id":ip_str},{"$set": {
-                "first_name": user.first_name,
-                "last_name": user.last_name,
-                "middle_name": user.middle_name,
-                "gender": user.gender,
-                "roles": user.roles
-            }})
+    # for data in users_data.find():
+    #     ip_str = str(user.id)
+    #     if data["py_id"] == str(user.id):
+    #         users_data.update_many({"py_id":ip_str},{"$set": {
+    #             "first_name": user.first_name,
+    #             "last_name": user.last_name,
+    #             "middle_name": user.middle_name,
+    #             "gender": user.gender,
+    #             "roles": user.roles
+    #         }})
+    users_data.find({"py_id": str(user_id)})
     return get_users()
