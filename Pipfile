@@ -10,6 +10,7 @@ typing = "*"
 pydantic = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 pymongo = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pylint = "*"

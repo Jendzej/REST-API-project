@@ -19,10 +19,11 @@ def join_user_data(user: User, collection_data=users_data):
         "last_name": user.last_name,
         "middle_name": user.middle_name,
         "gender": user.gender,
-        "roles": user.roles
+        "roles": user.roles,
+        "py_id": str(user.id)
     }
     users_data.insert_one(data_to_join)
-    return user
+    return user.id
 
 
 def get_users(collection=users_data):
